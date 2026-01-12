@@ -2,6 +2,11 @@
 
 This guide shows where to paste AdSense ad unit code in your HTML and how to troubleshoot common issues.
 
+> Tip: If you are not familiar with HTML, search for `HTML basics` or `HTML tutorial` before making changes.
+
+## Before you begin
+- Understand the difference between the AdSense library script (the `adsbygoogle.js` loader) and ad unit code (the `<ins>` block plus the `push()` call). Load the library once (preferably in `<head>`) and add ad units inside `<body>` where you want them to appear.
+
 ## Where to add ad unit code
 - Paste your ad unit code between the `<body>` and `</body>` tags of each page where you want an ad to appear. If you paste the ad code outside the `<body>` tags it may prevent ads from rendering correctly.
 
@@ -21,15 +26,15 @@ Example (responsive ad recommended):
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 ```
 
-> Tip: Add the script in `<head>` **once** and then include `ins` + `push()` blocks where needed in the body.
+> Note: The example above is for demonstration — copy your own ad code from your AdSense account and paste it exactly.
 
 ---
 
 ## How to position ads on your site with HTML
-You control placement with standard HTML containers (`<div>`, `<aside>`, etc.). Example to center:
+Just like other elements (images, paragraphs), you can control ad placement with HTML containers (`<div>`, `<aside>`, etc.). Example to center an ad:
 
 ```html
-<div style="text-align:center">
+<div align="center">
   <!-- ad unit here -->
 </div>
 ```
@@ -38,7 +43,14 @@ For responsive behavior, prefer `data-ad-format="auto"` so the ad adapts to avai
 
 ---
 
-## Common issues and quick fixes
+## Common issues with ad code
+Ads might not appear on your site if you find any of the following problems with your ad code:
+- Your ad code doesn't appear in its entirety (for example, there's a missing `<script>` or `<ins>` tag).
+- Your ad code displays all on one line (line breaks lost during pasting or through an editor).
+- Your ad code has extra HTML tags within it (editors sometimes insert wrappers or formatting).
+
+If you notice any of these issues, replace the broken ad code with fresh ad code copied from the Ads page in your AdSense account. Also review the quick fixes below:
+
 - Missing tags: ensure the `<script>`, `<ins>`, and the following `<script>(adsbygoogle...)</script>` appear exactly as copied.
 - All-on-one-line code: preserve line breaks when pasting; some editors may collapse whitespace.
 - Extra HTML inside the snippet: paste the snippet raw, without additional tags inside it.
@@ -48,35 +60,37 @@ For responsive behavior, prefer `data-ad-format="auto"` so the ad adapts to avai
 
 ---
 
-## Use Chrome DevTools to troubleshoot (quick checklist)
-1. Open the page and press `Ctrl+U` to view page source; verify the ad code matches your AdSense code exactly.
-2. Open DevTools (F12) → Console: look for errors like `adsbygoogle` or CSP errors.
-3. DevTools → Network: filter `pagead2.googlesyndication.com` and check the Google script and ad requests succeed (200/204).
-4. Inspect the `ins.adsbygoogle` element in Elements panel: does it have generated content? If empty, the ad was not filled.
+## Use Chrome DevTools to troubleshoot (step-by-step)
+1. Open the page that contains the ad code in your browser, then view your page's source (`Ctrl+U` in Chrome). Compare the ad code in the page source with the ad code in your AdSense account — they should match exactly.
+2. Open DevTools (F12) → Console: look for errors like `adsbygoogle` or CSP/content blocking errors.
+3. DevTools → Network: filter `pagead2.googlesyndication.com` and check that the Google script and ad requests return success (200/204).
+4. DevTools → Elements: inspect the `ins.adsbygoogle` element — if it has no generated content or remains empty, the ad was not filled.
 
 ---
 
 ## Temporary debug helper (in repository)
 - A small helper script has been added to `script.js` which waits a few seconds after page load and logs the status of `ins.adsbygoogle` elements:
-  - Logs `info` when slot has content.
+  - Logs `info` when a slot has content.
   - Logs `warn` and adds a dashed red outline if an ad element appears empty.
 - Remove this helper once you finish troubleshooting.
 
 ---
 
 ## WordPress quick notes
-- Use a plugin (e.g., *Ad Inserter*) or insert ad code into template files (e.g., `header.php` or `footer.php`) inside `<body>` where needed.
-- Keep the library script once in the site head and add ad units in templates or widget areas.
+- WordPress users: use a plugin (e.g., *Ad Inserter*) or place ad code in template files (e.g., `header.php` / `footer.php`) inside the `<body>`.
+- Keep the library script in the site head and add ad units in templates or widget areas.
+- If you use WYSIWYG editors, consult the editor manual — some editors strip or modify script tags.
 
 ---
 
-## More help
-Search for: `HTML basics`, `AdSense implementation`, `AdSense troubleshoot` or see AdSense docs.
+## Get more help
+If you need further assistance, try these searches: `HTML guides`, `HTML reference`, `HTML tutorial`, `HTML help`, `AdSense implementation`, `AdSense troubleshoot`.
+If you're using WYSIWYG or other HTML editing tools, check the product manual or contact their technical support for help.
 
 ---
 
 If you'd like, I can also:
 - Add the same responsive ad unit to other `.html` files in the repo.
-- Add a temporary visual indicator (CSS) to help spot empty ad slots during testing.
+- Add a small CSS rule for `.ads-debug-missing` to make the debug outline more visible.
 
 Tell me which you'd like next. 🔧
